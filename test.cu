@@ -26,6 +26,8 @@ __global__ void test_ldg(const T* i, T* o) {
 }
 
 int main() {
+    //sizeof(non_pod<char>) is 3
+    //__ldg(non_pod<char>*) will generate LDG.E.CT.S8 instructions
     typedef non_pod<char> non_pod3;
     thrust::device_vector<non_pod3> i3(1);
     thrust::device_vector<non_pod3> o3(1);
@@ -34,6 +36,9 @@ int main() {
                       thrust::raw_pointer_cast(o3.data()));
     non_pod3 r3 = o3[0];
     std::cout << r3 << std::endl;
+    
+    //sizeof(non_pod<int>) is 12
+    //__ldg(non_pod<int>*) will generate LDG.E.CT.32 instructions
     typedef non_pod<int> non_pod12;
     thrust::device_vector<non_pod12> i12(1);
     thrust::device_vector<non_pod12> o12(1);
