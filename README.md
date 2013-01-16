@@ -16,10 +16,10 @@ restriction on `T` is that it have a default constructor.
 Usage
 =====
 
-To use this library, simply `#include "ldg.h"`.  
+To use this library, simply `#include <ldg/ldg.h>`.  
 The `__ldg()` overloads provided natively by CUDA will be used if `T`
 is natively supported.  If not, the template will be used.
 
 See
-[test.cu](http://github.com/BryanCatanzaro/ldg/blob/master/test.cu)
+[test.cu](http://github.com/BryanCatanzaro/ldg/blob/master/test/test.cu)
 for an example.
