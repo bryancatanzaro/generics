@@ -1,8 +1,10 @@
-#include "ldg.h"
-
 #include <thrust/device_vector.h>
 #include <iostream>
 
+
+#include <ldg/ldg.h>
+
+//Just for example purposes - a non plain old data type
 template<typename T>
 struct non_pod {
     T x;
@@ -19,7 +21,7 @@ struct non_pod {
 };
 
 
-
+//Uses LDG to copy an element from one array into another
 template<typename T>
 __global__ void test_ldg(const T* i, T* o) {
     *o = __ldg(i);
@@ -27,18 +29,21 @@ __global__ void test_ldg(const T* i, T* o) {
 
 int main() {
     //sizeof(non_pod<char>) is 3
-    //__ldg(non_pod<char>*) will generate LDG.E.CT.S8 instructions
+    //will use 8-bit LDG loads
     typedef non_pod<char> non_pod3;
     thrust::device_vector<non_pod3> i3(1);
     thrust::device_vector<non_pod3> o3(1);
+    //Initialize input
     i3[0] = non_pod3(1,2,3);
+    //Use LDG to copy
     test_ldg<<<1,1>>>(thrust::raw_pointer_cast(i3.data()),
                       thrust::raw_pointer_cast(o3.data()));
+    //Retrieve result
     non_pod3 r3 = o3[0];
     std::cout << r3 << std::endl;
     
     //sizeof(non_pod<int>) is 12
-    //__ldg(non_pod<int>*) will generate LDG.E.CT.32 instructions
+    //will use 32-bit LDG loads
     typedef non_pod<int> non_pod12;
     thrust::device_vector<non_pod12> i12(1);
     thrust::device_vector<non_pod12> o12(1);
