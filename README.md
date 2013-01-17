@@ -6,9 +6,14 @@ NVIDIA GPUs of CUDA compute capability 3.5 and greater, such as the
 K20](http://www.nvidia.com/object/personal-supercomputing.html),
 support `__ldg()`, an intrinsic that loads through the read-only
 texture cache, and can improve performance in some circumstances.
-CUDA provides overloads of `__ldg()` for some built-in types [^1].
+CUDA provides overloads of `__ldg()` for some built-in types:
 
-This library provides a single template:
+`char`, `short`, `int`, `long long`, `int2`, `int4`, `unsigned
+char`, `unsigned short`, `unsigned int`, `unsigned long long`,
+`uint2`, `uint4`, `float`, `double`, `float2`, `float4`, `double2`.
+
+For all other types, including user defined types, this library
+provides a single template:
 
     template<typename T> __device__ T __ldg(const T*);
 
@@ -26,6 +31,3 @@ See
 [test.cu](http://github.com/BryanCatanzaro/ldg/blob/master/test/test.cu)
 for an example.
 
-[^1]: `char`, `short`, `int`, `long long`, `int2`, `int4`, `unsigned
-char`, `unsigned short`, `unsigned int`, `unsigned long long`,
-`uint2`, `uint4`, `float`, `double`, `float2`, `float4`, `double2`.
