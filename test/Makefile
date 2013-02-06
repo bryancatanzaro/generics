@@ -1,2 +1,4 @@
+CUDA_ARCH ?= sm_35
+
 test: test.cu
-	nvcc -arch=sm_35 -o test test.cu -I..
+	nvcc -arch=$(CUDA_ARCH) -o test test.cu -I..

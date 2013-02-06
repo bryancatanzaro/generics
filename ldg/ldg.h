@@ -28,9 +28,21 @@ struct load_storage<T, U, 1> {
 
 }
 
+
+#if __CUDA_ARCH__ >= 350
+// Device has ldg
 template<typename T>
 __device__ T __ldg(const T* ptr) {
     typedef typename detail::working_array<T>::type aliased;
     aliased storage = detail::load_storage<T>::impl(ptr);
     return detail::fuse<T>(storage);
 }
+
+#else
+//Device does not, fall back.
+template<typename T>
+__device__ T __ldg(const T* ptr) {
+    return *ptr;
+}
+
+#endif
