@@ -32,3 +32,6 @@ See
 [test.cu](http://github.com/BryanCatanzaro/ldg/blob/master/test/test.cu)
 for an example.
 
+If you are compiling for CUDA compute capability of less than 3.5, this library
+falls back to traditional loads.
+
