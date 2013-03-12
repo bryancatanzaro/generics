@@ -1,11 +1,18 @@
-LDG
+Generics
 ===
 
-NVIDIA GPUs of CUDA compute capability 3.5 and greater, such as the
-[Tesla
+This library generalizes certain CUDA intrinsics to work on arbitrary
+data types.  For example, NVIDIA GPUs of CUDA compute capability 3.5
+and greater, such as the [Tesla
 K20](http://www.nvidia.com/object/personal-supercomputing.html),
 support `__ldg()`, an intrinsic that loads through the read-only
 texture cache, and can improve performance in some circumstances.
+This library allows `__ldg` to work on arbitrary types, as detailed
+below. It also generalizes `__shfl()` to shuffle arbitrary types.
+
+LDG
+===
+
 CUDA provides overloads of `__ldg()` for some built-in types:
 
 `char`, `short`, `int`, `long long`, `int2`, `int4`, `unsigned
@@ -21,17 +28,18 @@ library provides a single template:
 This template allows data of any type to be loaded using `__ldg`. The
 only restriction on `T` is that it have a default constructor.
 
+
 Usage
 =====
 
-To use this library, simply `#include <ldg/ldg.h>`.  
+To use this library, simply `#include <generics/ldg.h>`.  
 The `__ldg()` overloads provided natively by CUDA will be used if `T`
 is natively supported.  If not, the template will be used.
 
 See
-[test.cu](http://github.com/BryanCatanzaro/ldg/blob/master/test/test.cu)
+[test.cu](http://github.com/BryanCatanzaro/ldg/blob/master/test/ldg.cu)
 for an example.
 
-If you are compiling for CUDA compute capability of less than 3.5, this library
-falls back to traditional loads.
+If you are compiling for CUDA compute capability of less than 3.5,
+`__ldg()` will fall back to traditional loads.
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <ldg/detail/fuse.h>
+#include <generics/detail/fuse.h>
 
 namespace detail {
 

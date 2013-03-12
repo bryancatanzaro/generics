@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-#include <ldg/ldg.h>
+#include <generics/ldg.h>
 
 //Just for example purposes - a non plain old data type
 template<typename T>

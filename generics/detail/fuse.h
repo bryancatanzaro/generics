@@ -1,5 +1,5 @@
 #pragma once
-#include <ldg/detail/array.h>
+#include <generics/detail/array.h>
 
 namespace detail {
 
