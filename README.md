@@ -59,6 +59,11 @@ mechanism. There are two restrictions on `T`:
       requirement.
  * `T` must have a default constructor
 
+To use this library, simply `#include <generics/shfl.h>`.  
+The `__shfl()` overloads provided natively by CUDA will be used if `T`
+is natively supported.  If not, the template will be used.
+
+ 
 See
 [shfl.cu](http://github.com/BryanCatanzaro/generics/blob/master/test/shfl.cu)
 for an example.
