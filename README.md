@@ -21,7 +21,7 @@ char`, `unsigned short`, `unsigned int`, `unsigned long long`,
 
 However, for all other types, including user defined types, the native
 overloads of `__ldg()` are insufficient.  To solve this problem, this
-library provides a single template:
+library provides a template:
 
     template<typename T> __device__ T __ldg(const T*);
 
@@ -29,17 +29,36 @@ This template allows data of any type to be loaded using `__ldg`. The
 only restriction on `T` is that it have a default constructor.
 
 
-Usage
-=====
-
 To use this library, simply `#include <generics/ldg.h>`.  
 The `__ldg()` overloads provided natively by CUDA will be used if `T`
 is natively supported.  If not, the template will be used.
 
 See
-[test.cu](http://github.com/BryanCatanzaro/ldg/blob/master/test/ldg.cu)
+[ldg.cu](http://github.com/BryanCatanzaro/generics/blob/master/test/ldg.cu)
 for an example.
 
 If you are compiling for CUDA compute capability of less than 3.5,
 `__ldg()` will fall back to traditional loads.
 
+SHFL
+====
+
+For devices of compute capability 3.0 or above, CUDA provides a
+`__shfl()` intrinsic that shares data between threads in a warp,
+without using any shared memory.  CUDA provides overloads for `int`
+and `float` types.  For all other types, this library provides a
+template:
+
+    template<typename T> __device__ T __shfl(const T& t, const int& i);
+
+This allows data of other types to be shuffled using the `__shfl()`
+mechanism. There are two restrictions on `T`:
+
+    * sizeof(T) must be divisible by 4. The code will fail to compile
+      if you instantiate it with a type that does not satisfy this
+      requirement.
+    * T must have a default constructor
+
+See
+[shfl.cu](http://github.com/BryanCatanzaro/generics/blob/master/test/shfl.cu)
+for an example.
