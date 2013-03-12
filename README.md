@@ -54,10 +54,10 @@ template:
 This allows data of other types to be shuffled using the `__shfl()`
 mechanism. There are two restrictions on `T`:
 
-    * sizeof(T) must be divisible by 4. The code will fail to compile
+ * sizeof(T) must be divisible by 4. The code will fail to compile
       if you instantiate it with a type that does not satisfy this
       requirement.
-    * T must have a default constructor
+ * T must have a default constructor
 
 See
 [shfl.cu](http://github.com/BryanCatanzaro/generics/blob/master/test/shfl.cu)
