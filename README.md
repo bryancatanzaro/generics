@@ -44,12 +44,15 @@ SHFL
 ====
 
 For devices of compute capability 3.0 or above, CUDA provides a
-`__shfl()` intrinsic that shares data between threads in a warp,
+set of `__shfl()` intrinsics that share data between threads in a warp,
 without using any shared memory.  CUDA provides overloads for `int`
-and `float` types.  For all other types, this library provides a
-template:
+and `float` types.  For all other types, this library provides a few
+templates:
 
     template<typename T> __device__ T __shfl(const T& t, const int& i);
+    template<typename T> __device__ T __shfl_down(const T& t, const int& delta);
+    template<typename T> __device__ T __shfl_up(const T& t, const int& delta);
+    template<typename T> __device__ T __shfl_xor(const T& t, const int& mask);
 
 This allows data of other types to be shuffled using the `__shfl()`
 mechanism. There are two restrictions on `T`:
